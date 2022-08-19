@@ -1,0 +1,21 @@
+SELECT
+  CodAttributeValue CodAttributeValueName,
+  DsAttributeValueName
+FROM
+  wfATTRIBUTEVALUE
+WHERE
+  CodGroupValue = 985 AND (
+    DsAttributeValueName2 IS NULL OR
+    DsAttributeValueName2 LIKE '%' + (
+      CASE (SELECT TP.Codigo FROM DB_INTEGRA_ORQUESTRA.dbo.Produto P
+      JOIN DB_INTEGRA_ORQUESTRA.dbo.TipoProduto TP ON Tp.id = p.TipoProdutoId
+      WHERE p.Codigo = '{Fonte.fb1e95e3-8b3c-4a17-ba99-5a11da7db634}')
+      WHEN 2 THEN 'PPRA'            -- ID: Grupo Segurança (PPRA)
+      WHEN 1 THEN 'PCMSO'           -- ID: Grupo Saúde (PCMSO)
+      WHEN 5 THEN 'Ergonomia'       -- ID: Grupo Ergonomia
+	    WHEN 7 THEN 'Demais NR'       -- ID: Grupo Demais NR
+	    WHEN 8 THEN 'Consultoria SST' -- ID: Grupo Consultoria SST
+      ELSE '{Fonte.fb1e95e3-8b3c-4a17-ba99-5a11da7db634}' END
+    ) + '%'
+  )
+  
